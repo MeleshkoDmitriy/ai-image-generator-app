@@ -14,18 +14,59 @@ import { File, Paths } from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import * as Sharing from "expo-sharing";
 import moment from "moment";
+import { Dropdown } from "react-native-element-dropdown";
 
 // const model = "flux-dev";
 // const model = "sdxl-1.0";
 // const model = "imagine-turbo";
-const model = "realistic";
+// const model = "realistic";
 // const model = "flux-schnell";
+
+const aiModels = [
+  {
+    label: "Flux Dev",
+    value: "flux-dev",
+  },
+  {
+    label: "SDXL 1.0",
+    value: "sdxl-1.0",
+  },
+  {
+    label: "Imagine Turbo",
+    value: "imagine-turbo",
+  },
+  {
+    label: "Realistic",
+    value: "realistic",
+  },
+  {
+    label: "Flux Schnell",
+    value: "flux-schnell",
+  },
+];
+
+const aspectRatios = [
+  {
+    label: "Square",
+    value: "1:1",
+  },
+  {
+    label: "Vertical",
+    value: "9:16",
+  },
+  {
+    label: "Horizontal",
+    value: "16:9",
+  },
+];
 
 // const aspect_ratio = "1:1"
 // const aspect_ratio = "16:9"
-const aspect_ratio = "9:16";
+// const aspect_ratio = "9:16";
 
 export const Generator = () => {
+  const [aiModel, setAiModel] = useState(aiModels[0].value);
+  const [aspectRatio, setAspectRatio] = useState(aspectRatios[0].value);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [prompt, setPrompt] = useState("");
 
@@ -33,8 +74,8 @@ export const Generator = () => {
     try {
       const formData = new FormData();
       formData.append("prompt", prompt);
-      formData.append("style", model);
-      formData.append("aspect_ratio", aspect_ratio);
+      formData.append("style", aiModel);
+      formData.append("aspect_ratio", aspectRatio);
 
       const response = await fetch(CONFIG.AI_BASE_URL, {
         method: "POST",
@@ -61,7 +102,6 @@ export const Generator = () => {
       fileReaderInstance.onload = () => {
         const base64Data = fileReaderInstance.result as string;
         setImageUrl(base64Data);
-        console.log(base64Data);
       };
     } catch (error) {
       console.warn("error generateImage", error);
@@ -136,11 +176,43 @@ export const Generator = () => {
   return (
     <ScrollView>
       <Text>Generator</Text>
-      <TextInput
-        value={prompt}
-        onChangeText={setPrompt}
-        style={{ backgroundColor: "red" }}
-      />
+      <View style={styles.box}>
+        <TextInput value={prompt} onChangeText={setPrompt} style={{ backgroundColor: "red" }} />
+        <Dropdown
+          style={styles.dropdown}
+          // placeholderStyle={styles.placeholderStyle}
+          // selectedTextStyle={styles.selectedTextStyle}
+          data={aiModels}
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          // placeholder={!isFocus ? 'Select item' : '...'}
+          value={aiModel}
+          // onFocus={() => setIsFocus(true)}
+          // onBlur={() => setIsFocus(false)}
+          onChange={(item) => {
+            setAiModel(item.value);
+            // setIsFocus(false);
+          }}
+        />
+        <Dropdown
+          style={styles.dropdown}
+          // placeholderStyle={styles.placeholderStyle}
+          // selectedTextStyle={styles.selectedTextStyle}
+          data={aspectRatios}
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          // placeholder={!isFocus ? 'Select item' : '...'}
+          value={aspectRatio}
+          // onFocus={() => setIsFocus(true)}
+          // onBlur={() => setIsFocus(false)}
+          onChange={(item) => {
+            setAspectRatio(item.value);
+            // setIsFocus(false);
+          }}
+        />
+      </View>
       {imageUrl ? (
         <View style={{ width: 300, height: 300, marginVertical: 20 }}>
           <Image
@@ -163,7 +235,7 @@ export const Generator = () => {
           <Text>Изображение загружается...</Text>
         </View>
       )}
-      <View style={styles.buttonsContainer}>
+      <View style={styles.box}>
         <TouchableOpacity onPress={generateImage} style={styles.button}>
           <Text style={styles.buttonText}>PUSH</Text>
         </TouchableOpacity>
@@ -179,7 +251,7 @@ export const Generator = () => {
 };
 
 const styles = StyleSheet.create({
-  buttonsContainer: {
+  box: {
     gap: 20,
   },
   button: {
@@ -193,4 +265,5 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
+  dropdown: {},
 });
