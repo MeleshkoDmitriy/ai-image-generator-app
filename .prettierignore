@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build
+.expo/
+dist/
+web-build/
+*.tsbuildinfo
+
+# Native
+ios/
+android/
+*.orig.*
+
+# Lock
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Assets (binary)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.webp
+*.woff
+*.woff2
