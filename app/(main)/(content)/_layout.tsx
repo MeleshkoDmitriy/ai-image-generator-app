@@ -15,7 +15,7 @@ export default function ContentLayout() {
           headerShown: false,
         }}
       />
-      <Stack.Screen name="generate-new" options={{ title: "Генерация" }} />
+      <Stack.Screen name="generate-image" options={{ title: "Генерация" }} />
       <Stack.Screen name="gallery" options={{ title: "Галерея" }} />
       <Stack.Screen name="[image]" options={{ title: "Детали" }} />
     </Stack>

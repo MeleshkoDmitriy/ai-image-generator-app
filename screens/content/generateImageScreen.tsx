@@ -16,6 +16,7 @@ import * as Sharing from "expo-sharing";
 import moment from "moment";
 import { Dropdown } from "react-native-element-dropdown";
 import { ScreenWrapper } from "@/components";
+import { useTranslation } from "react-i18next";
 
 // const model = "flux-dev";
 // const model = "sdxl-1.0";
@@ -70,6 +71,7 @@ export const GenerateImageScreen = () => {
   const [aspectRatio, setAspectRatio] = useState(aspectRatios[0].value);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [prompt, setPrompt] = useState("");
+  const { t } = useTranslation();
 
   const generateImage = async () => {
     try {
@@ -238,7 +240,7 @@ export const GenerateImageScreen = () => {
       )}
       <View style={styles.box}>
         <TouchableOpacity onPress={generateImage} style={styles.button}>
-          <Text style={styles.buttonText}>PUSH</Text>
+          <Text style={styles.buttonText}>{t("screens.generateImage.generateImage")}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleDownload} style={styles.button}>
           <Text style={styles.buttonText}>Download</Text>
