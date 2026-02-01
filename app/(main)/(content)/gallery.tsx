@@ -1,9 +1,5 @@
-import { Text, View } from "react-native";
+import { GalleryScreen } from "@/screens";
 
 export default function Gallery() {
-  return (
-    <View>
-      <Text>Gallery</Text>
-    </View>
-  );
+  return <GalleryScreen />;
 }

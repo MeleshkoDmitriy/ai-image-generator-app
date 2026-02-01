@@ -15,6 +15,7 @@ import * as MediaLibrary from "expo-media-library";
 import * as Sharing from "expo-sharing";
 import moment from "moment";
 import { Dropdown } from "react-native-element-dropdown";
+import { ScreenWrapper } from "@/components";
 
 // const model = "flux-dev";
 // const model = "sdxl-1.0";
@@ -64,7 +65,7 @@ const aspectRatios = [
 // const aspect_ratio = "16:9"
 // const aspect_ratio = "9:16";
 
-export const Generator = () => {
+export const GenerateImageScreen = () => {
   const [aiModel, setAiModel] = useState(aiModels[0].value);
   const [aspectRatio, setAspectRatio] = useState(aspectRatios[0].value);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -174,7 +175,7 @@ export const Generator = () => {
   };
 
   return (
-    <ScrollView>
+    <ScreenWrapper scrollable>
       <Text>Generator</Text>
       <View style={styles.box}>
         <TextInput value={prompt} onChangeText={setPrompt} style={{ backgroundColor: "red" }} />
@@ -246,7 +247,7 @@ export const Generator = () => {
           <Text style={styles.buttonText}>Share</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </ScreenWrapper>
   );
 };
 

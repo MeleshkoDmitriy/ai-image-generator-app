@@ -1,9 +1,5 @@
-import { Text, View } from "react-native";
+import { SettingsScreen } from "@/screens";
 
 export default function Settings() {
-  return (
-    <View>
-      <Text>Gallery</Text>
-    </View>
-  );
+  return <SettingsScreen />;
 }

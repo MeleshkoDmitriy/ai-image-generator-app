@@ -1,9 +1,5 @@
-import { Text, View } from "react-native";
+import { ImageDetailsScreen } from "@/screens";
 
-export default function ImageDatails() {
-  return (
-    <View>
-      <Text>ImageDatails</Text>
-    </View>
-  );
+export default function ImageDetails() {
+  return <ImageDetailsScreen />;
 }
