@@ -9,15 +9,15 @@ export interface LanguageContextValue {
 
 export const LanguageContext = createContext<LanguageContextValue | null>(null);
 
-interface LanguageProviderProps {
-  children: ReactNode;
-}
-
 const defineInitialLanguage = () => {
   return i18n.language === EnumStorageLangsValues.EN
     ? EnumStorageLangsValues.EN
     : EnumStorageLangsValues.RU;
 };
+
+interface LanguageProviderProps {
+  children: ReactNode;
+}
 
 export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   const [localeState, setLocaleState] = useState(() => defineInitialLanguage());
