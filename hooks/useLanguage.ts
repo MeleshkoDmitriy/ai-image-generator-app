@@ -1,5 +1,5 @@
-import { LanguageContext, LanguageContextValue } from "@/providers";
 import { useContext } from "react";
+import { LanguageContext, type LanguageContextValue } from "@/context";
 
 export function useLanguage(): LanguageContextValue {
   const context = useContext(LanguageContext);
