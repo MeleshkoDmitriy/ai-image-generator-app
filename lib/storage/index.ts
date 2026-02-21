@@ -1,8 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ColorSchemeName } from "react-native";
 
 export const enum EnumStorageKeys {
   AUTH = "auth",
   LANG = "lang",
+  THEME = "theme",
 }
 
 export const enum EnumStorageLangsValues {
@@ -10,11 +12,17 @@ export const enum EnumStorageLangsValues {
   RU = "ru",
 }
 
+export type TThemeObject = {
+  mode: ColorSchemeName;
+  system: boolean;
+};
+
 export type StorageKey = (typeof EnumStorageKeys)[keyof typeof EnumStorageKeys];
 
 export type TStorageSchema = {
   [EnumStorageKeys.AUTH]: boolean;
   [EnumStorageKeys.LANG]: EnumStorageLangsValues;
+  [EnumStorageKeys.THEME]: TThemeObject;
 };
 
 export const Storage = {

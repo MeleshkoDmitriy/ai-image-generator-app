@@ -2,12 +2,13 @@ import { useCallback, useRef, useState } from "react";
 import { Button, StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { ScreenWrapper, UIBottomSheet } from "@/components";
-import { EnumStorageLangsValues } from "@/lib";
-import { useLanguage } from "@/hooks";
+import { EnumStorageLangsValues, TThemeObject } from "@/lib";
+import { useLanguage, useTheme } from "@/hooks";
 import { useTranslation } from "react-i18next";
 
 export const SettingsScreen = () => {
   const { locale, setLocale } = useLanguage();
+  const { currentTheme, toggleTheme } = useTheme();
   const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [isLocaleOpen, setIsLocaleOpen] = useState(false);
@@ -19,7 +20,8 @@ export const SettingsScreen = () => {
     setIsLocaleOpen(false);
   };
 
-  const onSelectTheme = () => {
+  const onSelectTheme = (theme: TThemeObject["mode"]) => {
+    toggleTheme(theme === "dark" ? "light" : "dark");
     bottomSheetRef.current?.close();
     setIsThemeOpen(false);
   };
@@ -34,7 +36,7 @@ export const SettingsScreen = () => {
     setIsThemeOpen(true);
   }, []);
 
-  const localeContent = () => {
+  const LocaleContent = () => {
     return (
       <View>
         <TouchableOpacity
@@ -55,23 +57,30 @@ export const SettingsScreen = () => {
     );
   };
 
-  const themeContent = () => {
+  const ThemeContent = () => {
+    const { currentTheme, toggleTheme, useSystemTheme, isSystemTheme } = useTheme();
+
+    const handleThemeSwitch = () => {
+      toggleTheme(currentTheme === "dark" ? "light" : "dark");
+    };
+
     return (
       <View>
-        <TouchableOpacity onPress={onSelectTheme}>
-          <Text>Dark Mode</Text> <Switch />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={onSelectTheme}>
+        <View>
+          <Text>Dark Mode</Text>
+          <Switch value={currentTheme === "dark"} onValueChange={handleThemeSwitch} />
+        </View>
+        <TouchableOpacity style={styles.button} onPress={() => onSelectTheme(currentTheme)}>
           <Text style={styles.buttonText}>Light</Text>
-          {false && <Text style={styles.buttonText}> ✓</Text>}
+          {!isSystemTheme && currentTheme === "light" && <Text style={styles.buttonText}> ✓</Text>}
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={onSelectTheme}>
+        <TouchableOpacity style={styles.button} onPress={() => onSelectTheme(currentTheme)}>
           <Text style={styles.buttonText}>Dark</Text>
-          {false && <Text style={styles.buttonText}> ✓</Text>}
+          {!isSystemTheme && currentTheme === "dark" && <Text style={styles.buttonText}> ✓</Text>}
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={onSelectTheme}>
+        <TouchableOpacity style={styles.button} onPress={useSystemTheme}>
           <Text style={styles.buttonText}>System</Text>
-          {true && <Text style={styles.buttonText}> ✓</Text>}
+          {isSystemTheme && <Text style={styles.buttonText}> ✓</Text>}
         </TouchableOpacity>
       </View>
     );
@@ -82,12 +91,19 @@ export const SettingsScreen = () => {
       <Text>{t("common.settings")}</Text>
       <Button title={t("common.language")} onPress={handleLocalePress} />
 
-      <Button title="Theme" onPress={handleThemePress} />
+      <Button title={t("common.theme")} onPress={handleThemePress} />
+
+      <View
+        style={[
+          styles.themeBox,
+          { backgroundColor: currentTheme === "dark" ? "#f10505" : "#35e1f8" },
+        ]}
+      ></View>
 
       <UIBottomSheet ref={bottomSheetRef}>
         <>
-          {isLocaleOpen && localeContent()}
-          {isThemeOpen && themeContent()}
+          {isLocaleOpen && LocaleContent()}
+          {isThemeOpen && ThemeContent()}
         </>
       </UIBottomSheet>
     </ScreenWrapper>
@@ -101,5 +117,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
+  },
+  themeBox: {
+    width: 200,
+    height: 200,
   },
 });

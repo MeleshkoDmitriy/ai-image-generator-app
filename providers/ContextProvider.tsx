@@ -2,7 +2,7 @@ import { ReactNode, useEffect } from "react";
 import * as Localization from "expo-localization";
 import i18n from "@/i18n";
 import { EnumStorageKeys, EnumStorageLangsValues, Storage } from "@/lib";
-import { LanguageProvider } from "@/context";
+import { LanguageProvider, ThemeProvider } from "@/context";
 
 function getDeviceLang(): EnumStorageLangsValues {
   const code = Localization.getLocales()[0]?.languageCode ?? "en";
@@ -29,5 +29,9 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
     };
   }, []);
 
-  return <LanguageProvider>{children}</LanguageProvider>;
+  return (
+    <ThemeProvider>
+      <LanguageProvider>{children}</LanguageProvider>
+    </ThemeProvider>
+  );
 };

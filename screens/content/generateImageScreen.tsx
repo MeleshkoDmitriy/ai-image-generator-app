@@ -62,9 +62,13 @@ const aspectRatios = [
   },
 ];
 
-// const aspect_ratio = "1:1"
-// const aspect_ratio = "16:9"
-// const aspect_ratio = "9:16";
+const MAX_PREVIEW = 300;
+
+function getPreviewSize(ratio: string): { width: number; height: number } {
+  const [w, h] = ratio.split(":").map(Number);
+  if (w >= h) return { width: MAX_PREVIEW, height: Math.round((MAX_PREVIEW * h) / w) };
+  return { width: Math.round((MAX_PREVIEW * w) / h), height: MAX_PREVIEW };
+}
 
 export const GenerateImageScreen = () => {
   const [aiModel, setAiModel] = useState(aiModels[0].value);
@@ -79,6 +83,7 @@ export const GenerateImageScreen = () => {
       formData.append("prompt", prompt);
       formData.append("style", aiModel);
       formData.append("aspect_ratio", aspectRatio);
+      formData.append("variation", "txt2img");
 
       const response = await fetch(CONFIG.AI_BASE_URL, {
         method: "POST",
@@ -127,23 +132,29 @@ export const GenerateImageScreen = () => {
     return file.uri;
   };
 
+  const parseImageDataUrl = (dataUrl: string): { base64: string; ext: string } | null => {
+    const match = dataUrl.match(/^data:(image\/[a-z]+);base64,(.+)$/i);
+    if (!match) return null;
+    const mime = match[1].toLowerCase();
+    const base64 = match[2];
+    const ext = mime === "image/png" ? "png" : mime === "image/webp" ? "webp" : "jpeg";
+    return { base64, ext };
+  };
+
   const handleDownload = async () => {
     if (imageUrl === null) {
       Alert.alert("Image is null");
       return;
     }
-
-    const base64Code = imageUrl.split("data:image/jpeg;base64,")[1];
-    if (!base64Code) {
+    const parsed = parseImageDataUrl(imageUrl);
+    if (!parsed) {
       Alert.alert("Error", "Invalid image data");
       return;
     }
-
     const date = moment().format("YYYYMMDDhhmmss");
-    const filename = `${date}.jpeg`;
-
+    const filename = `${date}.${parsed.ext}`;
     try {
-      const fileUri = writeImageToFile(base64Code, filename);
+      const fileUri = writeImageToFile(parsed.base64, filename);
       await MediaLibrary.saveToLibraryAsync(fileUri);
       Alert.alert("Image downloaded successfully");
     } catch (error) {
@@ -157,18 +168,15 @@ export const GenerateImageScreen = () => {
       Alert.alert("Image is null");
       return;
     }
-
-    const base64Code = imageUrl.split("data:image/jpeg;base64,")[1];
-    if (!base64Code) {
+    const parsed = parseImageDataUrl(imageUrl);
+    if (!parsed) {
       Alert.alert("Error", "Invalid image data");
       return;
     }
-
     const date = moment().format("YYYYMMDDhhmmss");
-    const filename = `${date}.jpeg`;
-
+    const filename = `${date}.${parsed.ext}`;
     try {
-      const fileUri = writeImageToFile(base64Code, filename);
+      const fileUri = writeImageToFile(parsed.base64, filename);
       await Sharing.shareAsync(fileUri);
     } catch (error) {
       Alert.alert("handleShare error");
@@ -217,7 +225,13 @@ export const GenerateImageScreen = () => {
         />
       </View>
       {imageUrl ? (
-        <View style={{ width: 300, height: 300, marginVertical: 20 }}>
+        <View
+          style={{
+            ...getPreviewSize(aspectRatio),
+            marginVertical: 20,
+            alignSelf: "center",
+          }}
+        >
           <Image
             source={{ uri: imageUrl }}
             style={{ width: "100%", height: "100%" }}
@@ -227,12 +241,12 @@ export const GenerateImageScreen = () => {
       ) : (
         <View
           style={{
-            width: 300,
-            height: 300,
+            ...getPreviewSize(aspectRatio),
             marginVertical: 20,
             backgroundColor: "blue",
             justifyContent: "center",
             alignItems: "center",
+            alignSelf: "center",
           }}
         >
           <Text>Изображение загружается...</Text>

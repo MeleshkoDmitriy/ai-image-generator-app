@@ -1,4 +1,5 @@
-// import { useTheme } from '@/hooks';
+import { useTheme } from "@/hooks";
+import { StatusBar, StatusBarProps } from "expo-status-bar";
 import { ReactNode } from "react";
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -23,7 +24,8 @@ export const ScreenWrapper = ({
   contentStyle,
 }: ScreenWrapperProps) => {
   const insets = useSafeAreaInsets();
-  // const { theme } = useTheme();
+  const { currentTheme } = useTheme();
+  const statusBarStyle = currentTheme === "dark" ? "light" : "dark";
 
   const containerStyle = [
     styles.container,
@@ -36,6 +38,13 @@ export const ScreenWrapper = ({
     style,
   ];
 
+  const ChildrenWithStatusBar = () => (
+    <>
+      <StatusBar style={statusBarStyle} />
+      {children}
+    </>
+  );
+
   const content = scrollable ? (
     <ScrollView
       style={styles.scrollView}
@@ -43,10 +52,12 @@ export const ScreenWrapper = ({
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
     >
-      {children}
+      <ChildrenWithStatusBar />
     </ScrollView>
   ) : (
-    <View style={[styles.content, contentStyle]}>{children}</View>
+    <View style={[styles.content, contentStyle]}>
+      <ChildrenWithStatusBar />
+    </View>
   );
 
   if (keyboardAvoiding) {
