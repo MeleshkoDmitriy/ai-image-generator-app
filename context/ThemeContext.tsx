@@ -1,19 +1,24 @@
 import { EnumStorageKeys, Storage, TThemeObject } from "@/lib";
+import { theme, TTheme } from "@/styles";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
 
 export interface ThemeContextValue {
+  theme: TTheme;
   currentTheme: TThemeObject["mode"];
+  statusBarTheme: TThemeObject["mode"];
   toggleTheme: (newTheme: TThemeObject["mode"]) => void;
   useSystemTheme: () => void;
   isSystemTheme: boolean;
 }
 
 export const ThemeContext = createContext<ThemeContextValue>({
+  theme: theme["light"],
   currentTheme: "light",
+  statusBarTheme: "dark",
+  isSystemTheme: false,
   toggleTheme: () => {},
   useSystemTheme: () => {},
-  isSystemTheme: false,
 });
 
 interface ThemeProviderProps {
@@ -21,9 +26,11 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState<TThemeObject["mode"]>("light");
-  const colorScheme = useColorScheme();
+  const [currentTheme, setCurrentTheme] = useState<TThemeObject["mode"]>("light");
   const [systemTheme, setSystemTheme] = useState<TThemeObject["system"]>(false);
+  const colorScheme = useColorScheme();
+  const statusBarTheme = currentTheme === "dark" ? "light" : "dark";
+  const themeObject = theme[currentTheme];
 
   const persistUpdatedTheme = async (
     mode: TThemeObject["mode"],
@@ -34,7 +41,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
       system,
     };
 
-    setTheme(mode);
+    setCurrentTheme(mode);
     setSystemTheme(system);
     await Storage.setStorageItem(EnumStorageKeys.THEME, themeObject);
   };
@@ -45,7 +52,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
         const savedThemeObject = await Storage.getStorageItem(EnumStorageKeys.THEME);
 
         if (!!savedThemeObject) {
-          setTheme(savedThemeObject.mode);
+          setCurrentTheme(savedThemeObject.mode);
           setSystemTheme(savedThemeObject.system);
         }
       } catch (error) {
@@ -76,7 +83,14 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 
   return (
     <ThemeContext.Provider
-      value={{ currentTheme: theme, toggleTheme, useSystemTheme, isSystemTheme: systemTheme }}
+      value={{
+        theme: themeObject,
+        statusBarTheme,
+        currentTheme,
+        isSystemTheme: systemTheme,
+        toggleTheme,
+        useSystemTheme,
+      }}
     >
       {children}
     </ThemeContext.Provider>

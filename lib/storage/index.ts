@@ -1,5 +1,5 @@
+import { TThemeVariant } from "@/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ColorSchemeName } from "react-native";
 
 export const enum EnumStorageKeys {
   AUTH = "auth",
@@ -13,7 +13,7 @@ export const enum EnumStorageLangsValues {
 }
 
 export type TThemeObject = {
-  mode: ColorSchemeName;
+  mode: TThemeVariant;
   system: boolean;
 };
 

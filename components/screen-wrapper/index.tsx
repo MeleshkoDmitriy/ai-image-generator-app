@@ -1,8 +1,9 @@
 import { useTheme } from "@/hooks";
-import { StatusBar, StatusBarProps } from "expo-status-bar";
+import { StatusBar } from "expo-status-bar";
 import { ReactNode } from "react";
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import styled from "@emotion/native";
 
 interface ScreenWrapperProps {
   children: ReactNode;
@@ -24,23 +25,21 @@ export const ScreenWrapper = ({
   contentStyle,
 }: ScreenWrapperProps) => {
   const insets = useSafeAreaInsets();
-  const { currentTheme } = useTheme();
-  const statusBarStyle = currentTheme === "dark" ? "light" : "dark";
+  const { theme, statusBarTheme } = useTheme();
 
   const containerStyle = [
     styles.container,
     {
       paddingTop: safeAreaTop ? insets.top : 0,
       paddingBottom: safeAreaBottom ? insets.bottom : 0,
-      // backgroundColor: theme.colors.background.background,
-      backgroundColor: "white",
+      backgroundColor: theme.colors.background,
     },
     style,
   ];
 
   const ChildrenWithStatusBar = () => (
     <>
-      <StatusBar style={statusBarStyle} />
+      <StatusBar style={statusBarTheme} />
       {children}
     </>
   );
@@ -72,7 +71,15 @@ export const ScreenWrapper = ({
     );
   }
 
-  return <View style={containerStyle}>{content}</View>;
+  return (
+    <Container
+      paddingTop={safeAreaTop ? insets.top : 0}
+      paddingBottom={safeAreaBottom ? insets.bottom : 0}
+      style={style}
+    >
+      {content}
+    </Container>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -91,3 +98,12 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
 });
+
+const Container = styled.View<{ paddingTop: number; paddingBottom: number }>(
+  ({ theme, paddingTop, paddingBottom }) => ({
+    flex: 1,
+    backgroundColor: theme.colors.background,
+    paddingTop,
+    paddingBottom,
+  })
+);

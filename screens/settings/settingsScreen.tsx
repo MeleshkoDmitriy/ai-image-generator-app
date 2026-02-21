@@ -1,10 +1,11 @@
 import { useCallback, useRef, useState } from "react";
 import { Button, StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
 import BottomSheet from "@gorhom/bottom-sheet";
-import { ScreenWrapper, UIBottomSheet } from "@/components";
+import { ScreenWrapper, Typography, UIBottomSheet } from "@/components";
 import { EnumStorageLangsValues, TThemeObject } from "@/lib";
 import { useLanguage, useTheme } from "@/hooks";
 import { useTranslation } from "react-i18next";
+import styled from "@emotion/native";
 
 export const SettingsScreen = () => {
   const { locale, setLocale } = useLanguage();
@@ -88,17 +89,12 @@ export const SettingsScreen = () => {
 
   return (
     <ScreenWrapper>
-      <Text>{t("common.settings")}</Text>
+      <Typography>{t("common.settings")}</Typography>
       <Button title={t("common.language")} onPress={handleLocalePress} />
 
       <Button title={t("common.theme")} onPress={handleThemePress} />
 
-      <View
-        style={[
-          styles.themeBox,
-          { backgroundColor: currentTheme === "dark" ? "#f10505" : "#35e1f8" },
-        ]}
-      ></View>
+      <TestBox />
 
       <UIBottomSheet ref={bottomSheetRef}>
         <>
@@ -123,3 +119,9 @@ const styles = StyleSheet.create({
     height: 200,
   },
 });
+
+const TestBox = styled.View(({ theme }) => ({
+  width: 300,
+  height: 200,
+  backgroundColor: theme.colors.primary,
+}));
