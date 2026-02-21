@@ -1,2 +1,2 @@
-export * from "./useLanguage";
-export * from "./useTheme";
+export * from "./useLanguageContext";
+export * from "./useThemeContext";

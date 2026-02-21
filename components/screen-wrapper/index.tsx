@@ -1,4 +1,4 @@
-import { useTheme } from "@/hooks";
+import { useThemeContext } from "@/hooks";
 import { StatusBar } from "expo-status-bar";
 import { ReactNode } from "react";
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
@@ -25,7 +25,7 @@ export const ScreenWrapper = ({
   contentStyle,
 }: ScreenWrapperProps) => {
   const insets = useSafeAreaInsets();
-  const { theme, statusBarTheme } = useTheme();
+  const { theme, statusBarTheme } = useThemeContext();
 
   const containerStyle = [
     styles.container,

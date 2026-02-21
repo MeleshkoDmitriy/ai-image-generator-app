@@ -1,4 +1,4 @@
-import { useTheme } from "@/hooks";
+import { useThemeContext } from "@/hooks";
 import { ReactNode } from "react";
 import { ThemeProvider as EmotionThemeProvider } from "@emotion/react";
 
@@ -7,7 +7,7 @@ interface EmotionProviderProps {
 }
 
 export const EmotionProvider = ({ children }: EmotionProviderProps) => {
-  const { theme } = useTheme();
+  const { theme } = useThemeContext();
 
   return <EmotionThemeProvider theme={theme}>{children}</EmotionThemeProvider>;
 };

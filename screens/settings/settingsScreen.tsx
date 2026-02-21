@@ -3,13 +3,13 @@ import { Button, StyleSheet, Switch, Text, TouchableOpacity, View } from "react-
 import BottomSheet from "@gorhom/bottom-sheet";
 import { ScreenWrapper, Typography, UIBottomSheet } from "@/components";
 import { EnumStorageLangsValues, TThemeObject } from "@/lib";
-import { useLanguage, useTheme } from "@/hooks";
+import { useLanguageContext, useThemeContext } from "@/hooks";
 import { useTranslation } from "react-i18next";
 import styled from "@emotion/native";
 
 export const SettingsScreen = () => {
-  const { locale, setLocale } = useLanguage();
-  const { currentTheme, toggleTheme } = useTheme();
+  const { locale, setLocale } = useLanguageContext();
+  const { toggleTheme } = useThemeContext();
   const { t } = useTranslation();
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [isLocaleOpen, setIsLocaleOpen] = useState(false);
@@ -59,7 +59,7 @@ export const SettingsScreen = () => {
   };
 
   const ThemeContent = () => {
-    const { currentTheme, toggleTheme, useSystemTheme, isSystemTheme } = useTheme();
+    const { currentTheme, toggleTheme, useSystemTheme, isSystemTheme } = useThemeContext();
 
     const handleThemeSwitch = () => {
       toggleTheme(currentTheme === "dark" ? "light" : "dark");
