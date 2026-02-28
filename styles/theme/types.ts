@@ -1,5 +1,5 @@
 import { TThemeVariant } from "@/types";
-import { DefaultTheme } from "styled-components";
+import { typography } from "./typography";
 
 export type TAccentColors = {
   primary: string;
@@ -17,10 +17,14 @@ export type TThemeColors = {
   shadow: string;
 } & TAccentColors;
 
+export type TThemeTypography = typeof typography;
+export type TTypographyVariant = keyof typeof typography;
+export type TTypographyWeight = "regular" | "strong";
+
 export type TTheme = {
   variant: TThemeVariant;
   colors: TThemeColors;
   // sizes: ,
   // spacings: ,
-  // typography: ,
+  typography: TThemeTypography;
 };

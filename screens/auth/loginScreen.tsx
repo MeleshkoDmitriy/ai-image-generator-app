@@ -1,6 +1,6 @@
-import { ScreenWrapper } from "@/components";
+import { ScreenWrapper, Typography } from "@/components";
 import { useRouter } from "expo-router";
-import { Button, Text } from "react-native";
+import { Button } from "react-native";
 
 export const LoginScreen = () => {
   const router = useRouter();
@@ -11,8 +11,8 @@ export const LoginScreen = () => {
 
   return (
     <ScreenWrapper>
-      <Text>Register</Text>
-      <Button title="Register" onPress={handleLogin} />
+      <Typography variant="title">LoginScreen</Typography>
+      <Button title="Login" onPress={handleLogin} />
     </ScreenWrapper>
   );
 };

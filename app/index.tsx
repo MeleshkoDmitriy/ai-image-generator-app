@@ -16,7 +16,7 @@ export default function Index() {
       if (value === "true") {
         router.replace("/(main)/(content)");
       } else {
-        router.replace("/(auth)/login");
+        router.replace("/(auth)");
       }
     });
   }, [router]);

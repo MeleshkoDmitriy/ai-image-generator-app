@@ -1,5 +1,5 @@
-import { RegisterScreen } from "@/screens";
+import { LoginScreen } from "@/screens";
 
-export default function Register() {
-  return <RegisterScreen />;
+export default function Login() {
+  return <LoginScreen />;
 }
