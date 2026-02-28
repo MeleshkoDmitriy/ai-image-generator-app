@@ -1,6 +1,5 @@
-import { ScreenWrapper } from "@/components";
+import { Button, ScreenWrapper } from "@/components";
 import { useRouter } from "expo-router";
-import { Button } from "react-native";
 
 export const HomeScreen = () => {
   const router = useRouter();
@@ -15,8 +14,8 @@ export const HomeScreen = () => {
 
   return (
     <ScreenWrapper scrollable>
-      <Button title="Generate images" onPress={handleGenerateImages} />
-      <Button title="Gallery" onPress={handleGallery} />
+      <Button onPress={handleGenerateImages}>Generate images</Button>
+      <Button onPress={handleGallery}>Gallery</Button>
     </ScreenWrapper>
   );
 };

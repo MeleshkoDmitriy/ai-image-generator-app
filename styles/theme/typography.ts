@@ -34,12 +34,12 @@ export const typography = {
   button: {
     regular: {
       ...commonFontStyles,
-      fontSize: scaledPixels(22),
+      fontSize: scaledPixels(24),
       fontWeight: 400,
     },
     strong: {
       ...commonFontStyles,
-      fontSize: scaledPixels(22),
+      fontSize: scaledPixels(24),
       fontWeight: 700,
       fontFamily: "FiraSans_700Bold",
     },

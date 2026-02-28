@@ -1,6 +1,5 @@
-import { EnumIconName, Icon, ScreenWrapper, Typography } from "@/components";
+import { Button, EnumIconName, Icon, ScreenWrapper, Typography } from "@/components";
 import { useRouter } from "expo-router";
-import { Button } from "react-native";
 
 export const LoginScreen = () => {
   const router = useRouter();
@@ -12,7 +11,7 @@ export const LoginScreen = () => {
   return (
     <ScreenWrapper>
       <Typography variant="title">LoginScreen</Typography>
-      <Button title="Login" onPress={handleLogin} />
+      <Button onPress={handleLogin}>Login</Button>
       <Icon name={EnumIconName.Home} />
     </ScreenWrapper>
   );
