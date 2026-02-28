@@ -1,5 +1,6 @@
 export const ENG = {
   common: {
+    home: "Home",
     settings: "Settings",
     language: "Language",
     theme: "Theme",
