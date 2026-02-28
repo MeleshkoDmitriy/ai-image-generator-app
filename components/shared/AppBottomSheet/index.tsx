@@ -2,12 +2,12 @@ import { RefObject, useCallback, useMemo } from "react";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 
-interface UIBottomSheetProps {
+interface AppBottomSheetProps {
   ref: RefObject<BottomSheetMethods | null>;
   children: React.ReactNode;
 }
 
-export const UIBottomSheet = ({ children, ref }: UIBottomSheetProps) => {
+export const AppBottomSheet = ({ children, ref }: AppBottomSheetProps) => {
   // const handleSnapPress = useCallback((index: number) => {
   //   bottomSheetRef.current?.snapToIndex(index);
   // }, []);

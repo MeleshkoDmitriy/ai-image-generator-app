@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { ReactNode } from "react";
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import styled from "@emotion/native";
+import { styled } from "styled-components/native";
 
 interface ScreenWrapperProps {
   children: ReactNode;

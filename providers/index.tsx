@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ContextProvider } from "./ContextProvider";
-import { EmotionProvider } from "./EmotionProvider";
+import { StyledProvider } from "./StyledProvider";
 
 interface AppProviderProps {
   children: ReactNode;
@@ -12,9 +12,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <ContextProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <EmotionProvider>
+        <StyledProvider>
           <SafeAreaProvider>{children}</SafeAreaProvider>
-        </EmotionProvider>
+        </StyledProvider>
       </GestureHandlerRootView>
     </ContextProvider>
   );

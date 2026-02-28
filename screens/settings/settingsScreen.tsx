@@ -1,11 +1,11 @@
 import { useCallback, useRef, useState } from "react";
 import { Button, StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
 import BottomSheet from "@gorhom/bottom-sheet";
-import { ScreenWrapper, Typography, UIBottomSheet } from "@/components";
+import { ScreenWrapper, Typography, AppBottomSheet } from "@/components";
 import { EnumStorageLangsValues, TThemeObject } from "@/lib";
 import { useLanguageContext, useThemeContext } from "@/hooks";
 import { useTranslation } from "react-i18next";
-import styled from "@emotion/native";
+import { styled } from "styled-components/native";
 
 export const SettingsScreen = () => {
   const { locale, setLocale } = useLanguageContext();
@@ -96,12 +96,12 @@ export const SettingsScreen = () => {
 
       <TestBox />
 
-      <UIBottomSheet ref={bottomSheetRef}>
+      <AppBottomSheet ref={bottomSheetRef}>
         <>
           {isLocaleOpen && LocaleContent()}
           {isThemeOpen && ThemeContent()}
         </>
-      </UIBottomSheet>
+      </AppBottomSheet>
     </ScreenWrapper>
   );
 };

@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { ActivityIndicator, Text, View } from "react-native";
+import { useLayoutEffect, useState } from "react";
+import { ActivityIndicator } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AUTH_KEY = "isAuth";
@@ -19,7 +19,7 @@ export default function Index() {
         router.replace("/(auth)/login");
       }
     });
-  }, []);
+  }, [router]);
 
   if (!isReady) {
     return <ActivityIndicator />;

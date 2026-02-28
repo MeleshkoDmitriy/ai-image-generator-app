@@ -1,4 +1,5 @@
 import { TThemeVariant } from "@/types";
+import { DefaultTheme } from "styled-components";
 
 export type TAccentColors = {
   primary: string;
