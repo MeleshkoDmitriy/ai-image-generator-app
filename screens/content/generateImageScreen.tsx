@@ -1,21 +1,12 @@
 import { CONFIG } from "@/config";
 import { useState } from "react";
-import {
-  Alert,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Alert, Image, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import { File, Paths } from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import * as Sharing from "expo-sharing";
 import moment from "moment";
 import { Dropdown } from "react-native-element-dropdown";
-import { ScreenWrapper } from "@/components";
+import { Button, ScreenWrapper, Typography } from "@/components";
 import { useTranslation } from "react-i18next";
 
 // const model = "flux-dev";
@@ -186,7 +177,7 @@ export const GenerateImageScreen = () => {
 
   return (
     <ScreenWrapper scrollable>
-      <Text>Generator</Text>
+      <Typography>{t("screens.generateImage.generator")}</Typography>
       <View style={styles.box}>
         <TextInput value={prompt} onChangeText={setPrompt} style={{ backgroundColor: "red" }} />
         <Dropdown
@@ -248,20 +239,12 @@ export const GenerateImageScreen = () => {
             alignItems: "center",
             alignSelf: "center",
           }}
-        >
-          <Text>Изображение загружается...</Text>
-        </View>
+        ></View>
       )}
       <View style={styles.box}>
-        <TouchableOpacity onPress={generateImage} style={styles.button}>
-          <Text style={styles.buttonText}>{t("screens.generateImage.generateImage")}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleDownload} style={styles.button}>
-          <Text style={styles.buttonText}>Download</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleShare} style={styles.button}>
-          <Text style={styles.buttonText}>Share</Text>
-        </TouchableOpacity>
+        <Button onPress={generateImage}>{t("screens.generateImage.generate")}</Button>
+        <Button onPress={handleDownload}>{t("screens.generateImage.download")}</Button>
+        <Button onPress={handleShare}>{t("screens.generateImage.share")}</Button>
       </View>
     </ScreenWrapper>
   );

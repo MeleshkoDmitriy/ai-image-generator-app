@@ -4,6 +4,7 @@ import { templates, theme } from "@/styles";
 export const enum EnumIconName {
   Home = "home",
   Settings = "settings",
+  Check = "checkmark-sharp",
 }
 
 interface IconProps {

@@ -1,10 +1,12 @@
-import { ScreenWrapper } from "@/components";
-import { Text } from "react-native";
+import { ScreenWrapper, Typography } from "@/components";
+import { useTranslation } from "react-i18next";
 
 export const GalleryScreen = () => {
+  const { t } = useTranslation();
+
   return (
     <ScreenWrapper>
-      <Text>Gallery</Text>
+      <Typography>{t("screens.gallery.gallery")}</Typography>
     </ScreenWrapper>
   );
 };

@@ -1,23 +1,28 @@
 import { Stack } from "expo-router";
+import { useTranslation } from "react-i18next";
 
 export default function ContentLayout() {
+  const { t } = useTranslation();
+
   return (
     <Stack
       screenOptions={{
         headerShown: true,
-        headerBackTitle: "Назад",
+        headerBackTitle: t("common.back"),
       }}
     >
       <Stack.Screen
         name="index"
         options={{
-          title: "Контент",
-          headerShown: false,
+          title: t("common.home"),
         }}
       />
-      <Stack.Screen name="generate-image" options={{ title: "Генерация" }} />
-      <Stack.Screen name="gallery" options={{ title: "Галерея" }} />
-      <Stack.Screen name="[image]" options={{ title: "Детали" }} />
+      <Stack.Screen
+        name="generate-image"
+        options={{ title: t("screens.generateImage.generate") }}
+      />
+      <Stack.Screen name="gallery" options={{ title: t("screens.gallery.gallery") }} />
+      <Stack.Screen name="[image]" options={{ title: t("screens.imageDetails.imageDetails") }} />
     </Stack>
   );
 }

@@ -13,6 +13,7 @@ export default function MainTabs() {
       screenOptions={{
         tabBarActiveTintColor: theme.colors.textPrimary,
         tabBarInactiveTintColor: theme.colors.textSecondary,
+        headerShown: false,
       }}
     >
       <Tabs.Screen

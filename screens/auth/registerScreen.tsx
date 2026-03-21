@@ -1,9 +1,10 @@
-import { ScreenWrapper, Typography } from "@/components";
+import { ScreenWrapper, Typography, Button } from "@/components";
 import { useRouter } from "expo-router";
-import { Button } from "react-native";
+import { useTranslation } from "react-i18next";
 
 export const RegisterScreen = () => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleRegister = () => {
     router.replace("/(main)/(content)");
@@ -11,8 +12,8 @@ export const RegisterScreen = () => {
 
   return (
     <ScreenWrapper>
-      <Typography fontWeight="strong">Registe</Typography>
-      <Button title="Register" onPress={handleRegister} />
+      <Typography variant="title">{t("screens.login.signUp")}</Typography>
+      <Button onPress={handleRegister}>{t("screens.login.signUp")}</Button>
     </ScreenWrapper>
   );
 };
